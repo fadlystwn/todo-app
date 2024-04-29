@@ -4,7 +4,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { TaskProps } from '@/types/Task';
 import TodoDatePicker from './TodoDatePicker/TodoDatePicker';
 
-const CreateTask: FC<TaskProps> = ({ closeTask, handleSubmit, handleDateChange, selectedDate }) => {
+const CreateTask: FC<TaskProps> = ({
+  closeTask, handleSubmit,
+  handleDateChange,
+  handleTitleChange,
+  selectedDate,
+  taskTitle }) => {
   return (
     <div data-testid="form-task" className="flex flex-col justify-end">
       <div className="mb-4">
@@ -13,8 +18,8 @@ const CreateTask: FC<TaskProps> = ({ closeTask, handleSubmit, handleDateChange, 
           type="text"
           id="title"
           className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          // value={title}
-          // onChange={handleTitleChange}
+          value={taskTitle}
+          onChange={handleTitleChange}
           required />
       </div>
       <div className="mb-4">

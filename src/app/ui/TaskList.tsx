@@ -1,13 +1,15 @@
 "use client";
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Icon } from '@iconify-icon/react';
 import { Task } from '@/types/Task'
+import useStore from '@/stores/todo-stores';
 
 type TaskListProps = {
-  tasks: Task[]
+  handleEditTask: (id: number) => void;
+};
 
-}
-const TaskList: FC<TaskListProps> = ({ tasks }) => {
+const TaskList: FC<TaskListProps> = ({ handleEditTask }) => {
+  const { tasks, markAsCompleted, removeTask } = useStore();
   return (
     <ul>
       {tasks.map((task: Task) => (
@@ -21,12 +23,14 @@ const TaskList: FC<TaskListProps> = ({ tasks }) => {
               <p className="text-xs text-gray-500">{task.dueDate}</p>
             </div>
             <div className="flex gap-2">
-
-              <button>
+              <button onClick={() => handleEditTask(task.id)}>
                 <Icon icon="tabler:edit" className="text-2xl" />
               </button>
-              <button>
+              <button onClick={() => markAsCompleted(task.id)}>
                 <Icon icon="tabler:circle-check" className="text-2xl " />
+              </button>
+              <button onClick={() => removeTask(task.id)}>
+                <Icon icon="tabler:trash" className="text-2xl " />
               </button>
             </div>
           </div>
