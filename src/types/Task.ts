@@ -9,6 +9,8 @@ export interface Task {
 export interface TaskProps {
   closeTask: () => void;
   handleSubmit: () => void;
+  handleTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  taskTitle: string;
   handleDateChange: (date: any) => void;
   selectedDate: Date | null;
 }
