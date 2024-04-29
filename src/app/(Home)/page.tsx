@@ -1,20 +1,13 @@
 "use client"
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { Icon } from '@iconify-icon/react';
 import CompletedTask from '../ui/CompletedTask';
 import TaskList from '../ui/TaskList';
 import CreateTask from '../ui/CreateTask';
 
-export type TaskProps = {
-  closeTask: () => void;
-  handleSubmit: () => void;
-
-}
-type SubmitButtonProps = {
+type CreateButtonProps = {
   onShow: () => void;
-
 }
-
 
 const NoTaskUI = () => {
   return (
@@ -24,7 +17,7 @@ const NoTaskUI = () => {
   );
 };
 
-const SubmitButton: FC<SubmitButtonProps> = ({ onShow }) => {
+const CreateButton: FC<CreateButtonProps> = ({ onShow }) => {
   return (
     <button
       onClick={onShow}
@@ -37,6 +30,7 @@ const SubmitButton: FC<SubmitButtonProps> = ({ onShow }) => {
 const TodoApp = () => {
   const [isTaskVisible, setIsTaskVisible] = useState(false);
   const [tasks, setTasks] = useState<{ id: number; title: string; dueDate: string; completed: boolean; }[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const handleCreateTask = () => {
     setTasks([...tasks, {
@@ -51,15 +45,37 @@ const TodoApp = () => {
     handleCreateTask()
     setIsTaskVisible(false)
   }
+
+  const handleDateChange = (date: any) => {
+    setSelectedDate(date);
+  };
+
+  useEffect(() => {
+    const focusInput = () => {
+      const inputElement = document.getElementById("title");
+      if (inputElement) {
+        inputElement.focus();
+      }
+    };
+    focusInput();
+  }, [isTaskVisible]);
+
   return (
     <div className="min-h-screen bg-gray-200 flex justify-center items-center">
       <div className="bg-white p-4 md:p-8 rounded shadow-md w-full md:w-3/4 lg:w-1/2 xl:w-1/3">
         <div className="flex flex-col">
           <h1 className="text-2xl font-semibold mb-4 text-center">Your Task</h1>
           {
-            isTaskVisible && <CreateTask closeTask={() => setIsTaskVisible(false)} handleSubmit={handleTaskSubmission} />
+            isTaskVisible && (
+              <CreateTask
+                closeTask={() => setIsTaskVisible(false)}
+                handleSubmit={handleTaskSubmission}
+                handleDateChange={(date: any) => handleDateChange(date)}
+                selectedDate={selectedDate}
+              />
+            )
           }
-          {!isTaskVisible && <SubmitButton onShow={() => setIsTaskVisible(true)} />}
+          {!isTaskVisible && <CreateButton onShow={() => setIsTaskVisible(true)} />}
         </div>
         <div data-testid="all-task">
           {tasks.length > 0 ? <TaskList tasks={tasks} /> : <NoTaskUI />}

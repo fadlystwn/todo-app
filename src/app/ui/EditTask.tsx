@@ -1,10 +1,13 @@
 "use client";
 import React, { FC } from 'react';
-import 'react-datepicker/dist/react-datepicker.css';
-import { TaskProps } from '@/types/Task';
-import TodoDatePicker from './TodoDatePicker/TodoDatePicker';
 
-const CreateTask: FC<TaskProps> = ({ closeTask, handleSubmit, handleDateChange, selectedDate }) => {
+type TaskProps = {
+  closeTask: () => void;
+  handleSubmit: () => void;
+  handleChange: () => void;
+}
+
+const EditTask: FC<TaskProps> = ({ closeTask, handleSubmit }) => {
   return (
     <div data-testid="form-task" className="flex flex-col justify-end">
       <div className="mb-4">
@@ -16,12 +19,6 @@ const CreateTask: FC<TaskProps> = ({ closeTask, handleSubmit, handleDateChange, 
           // value={title}
           // onChange={handleTitleChange}
           required />
-      </div>
-      <div className="mb-4">
-        <TodoDatePicker
-          selectedDate={selectedDate}
-          handleDateChange={handleDateChange}
-        />
       </div>
       <div className="flex justify-end gap-4">
         <button
@@ -42,4 +39,4 @@ const CreateTask: FC<TaskProps> = ({ closeTask, handleSubmit, handleDateChange, 
   );
 };
 
-export default CreateTask
+export default EditTask

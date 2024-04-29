@@ -5,3 +5,10 @@ export interface Task {
   completed: boolean;
 
 };
+
+export interface TaskProps {
+  closeTask: () => void;
+  handleSubmit: () => void;
+  handleDateChange: (date: any) => void;
+  selectedDate: Date | null;
+}
