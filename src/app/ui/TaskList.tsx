@@ -3,11 +3,11 @@ import React, { FC } from 'react';
 import { Icon } from '@iconify-icon/react';
 import { Task } from '@/types/Task'
 
-type TaskComponentProps = {
+type TaskListProps = {
   tasks: Task[]
 
 }
-const TaskComponent: FC<TaskComponentProps> = ({ tasks }) => {
+const TaskList: FC<TaskListProps> = ({ tasks }) => {
   return (
     <ul>
       {tasks.map((task: Task) => (
@@ -38,4 +38,4 @@ const TaskComponent: FC<TaskComponentProps> = ({ tasks }) => {
   );
 };
 
-export default TaskComponent;
+export default TaskList;

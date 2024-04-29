@@ -1,8 +1,8 @@
 "use client"
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { Icon } from '@iconify-icon/react';
 import CompletedTask from '../ui/CompletedTask';
-import TaskComponent from '../ui/TaskComponent';
+import TaskList from '../ui/TaskList';
 import CreateTask from '../ui/CreateTask';
 
 export type TaskProps = {
@@ -10,6 +10,12 @@ export type TaskProps = {
   handleSubmit: () => void;
 
 }
+type SubmitButtonProps = {
+  onShow: () => void;
+
+}
+
+
 const NoTaskUI = () => {
   return (
     <div className="flex justify-center items-center h-full border-dotted border-2 p-8 my-4">
@@ -17,6 +23,16 @@ const NoTaskUI = () => {
     </div>
   );
 };
+
+const SubmitButton: FC<SubmitButtonProps> = ({ onShow }) => {
+  return (
+    <button
+      onClick={onShow}
+      className="ml-auto border-2 rounded w-12 h-12 border-slate-800 hover:border-emerald-500  active:border-emerald-300">
+      <Icon icon="tabler:plus" className="text-3xl" />
+    </button>
+  );
+}
 
 const TodoApp = () => {
   const [isTaskVisible, setIsTaskVisible] = useState(false);
@@ -43,25 +59,10 @@ const TodoApp = () => {
           {
             isTaskVisible && <CreateTask closeTask={() => setIsTaskVisible(false)} handleSubmit={handleTaskSubmission} />
           }
-          {
-            !isTaskVisible && (
-              <button
-                onClick={() => setIsTaskVisible(!isTaskVisible)}
-                className="ml-auto border-2 rounded w-12 h-12 border-slate-800 hover:border-emerald-500  active:border-emerald-300">
-                <Icon icon="tabler:plus" className="text-3xl" />
-              </button>
-            )
-          }
+          {!isTaskVisible && <SubmitButton onShow={() => setIsTaskVisible(true)} />}
         </div>
         <div data-testid="all-task">
-          {
-            tasks.length > 0 ? (
-              <TaskComponent tasks={tasks} />
-            ) : (
-              <NoTaskUI />
-            )
-          }
-
+          {tasks.length > 0 ? <TaskList tasks={tasks} /> : <NoTaskUI />}
         </div>
         <CompletedTask />
       </div>
