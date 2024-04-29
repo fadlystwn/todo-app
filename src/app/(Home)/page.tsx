@@ -1,44 +1,29 @@
 "use client"
-import React, { FC, useState, useEffect } from 'react'
-import { Icon } from '@iconify-icon/react';
+import React, { useState, useEffect } from 'react'
 import CompletedTask from '../ui/CompletedTask';
 import TaskList from '../ui/TaskList';
 import CreateTask from '../ui/CreateTask';
+import useStore from '@/stores/todo-stores';
+import CreateButton from '../ui/CreateButton';
+import NoTaskUI from '../ui/NoTaskUI';
 
-type CreateButtonProps = {
-  onShow: () => void;
-}
-
-const NoTaskUI = () => {
-  return (
-    <div className="flex justify-center items-center h-full border-dotted border-2 p-8 my-4">
-      <p className="text-gray-500 text-lg">No tasks to display</p>
-    </div>
-  );
-};
-
-const CreateButton: FC<CreateButtonProps> = ({ onShow }) => {
-  return (
-    <button
-      onClick={onShow}
-      className="ml-auto border-2 rounded w-12 h-12 border-slate-800 hover:border-emerald-500  active:border-emerald-300">
-      <Icon icon="tabler:plus" className="text-3xl" />
-    </button>
-  );
-}
 
 const TodoApp = () => {
   const [isTaskVisible, setIsTaskVisible] = useState(false);
-  const [tasks, setTasks] = useState<{ id: number; title: string; dueDate: string; completed: boolean; }[]>([]);
+  const [taskTitle, setTaskTitle] = useState("");
+  const { tasks, addTask, editTask, removeTask, markAsCompleted } = useStore();
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [isNewTask, setIsNewTask] = useState(false);
 
   const handleCreateTask = () => {
-    setTasks([...tasks, {
-      id: tasks.length + 1,
-      title: "Task 01",
-      dueDate: "April 30, 2024",
-      completed: false
-    }]);
+    if (isNewTask) {
+      addTask({
+        id: tasks.length + 1,
+        title: taskTitle,
+        dueDate: selectedDate?.toDateString() || "",
+        completed: false,
+      })
+    }
   }
 
   const handleTaskSubmission = () => {
@@ -49,6 +34,21 @@ const TodoApp = () => {
   const handleDateChange = (date: any) => {
     setSelectedDate(date);
   };
+
+  const handleEditTask = (id: number) => {
+    setIsTaskVisible(true);
+    setTaskTitle(tasks.find(task => task.id === id)?.title || "");
+    setSelectedDate(new Date(tasks.find(task => task.id === id)?.dueDate || ""));
+  }
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskTitle(e.target.value);
+  }
+
+  const handleClose = () => {
+    setIsTaskVisible(false);
+    setTaskTitle("")
+  }
 
   useEffect(() => {
     const focusInput = () => {
@@ -68,17 +68,21 @@ const TodoApp = () => {
           {
             isTaskVisible && (
               <CreateTask
-                closeTask={() => setIsTaskVisible(false)}
+                handleTitleChange={(e) => handleTitleChange(e)}
+                closeTask={() => handleClose()}
                 handleSubmit={handleTaskSubmission}
                 handleDateChange={(date: any) => handleDateChange(date)}
                 selectedDate={selectedDate}
+                taskTitle={taskTitle}
               />
             )
           }
           {!isTaskVisible && <CreateButton onShow={() => setIsTaskVisible(true)} />}
         </div>
         <div data-testid="all-task">
-          {tasks.length > 0 ? <TaskList tasks={tasks} /> : <NoTaskUI />}
+          {tasks.length > 0 ? (
+            <TaskList handleEditTask={(id: number) => handleEditTask(id)} />
+          ) : <NoTaskUI />}
         </div>
         <CompletedTask />
       </div>
