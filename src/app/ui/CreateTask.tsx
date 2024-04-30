@@ -12,7 +12,7 @@ const CreateTask: FC<TaskProps> = ({
   submitLabel,
   taskTitle }) => {
   return (
-    <div data-testid="form-task" className="flex flex-col justify-end">
+    <div data-testid="form-task" className="animate__animated animate__fadeIn flex flex-col justify-end">
       <div className="mb-4">
         <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Task Title</label>
         <input
