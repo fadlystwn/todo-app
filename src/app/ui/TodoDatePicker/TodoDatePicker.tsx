@@ -20,7 +20,7 @@ const TodoDatePicker: FC<TodoDatePickerProps> = ({
         id="dueDate"
         name="due-date"
         selected={selectedDate}
-        className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-emerald-500 focus:shadow-outline"
         onChange={handleDateChange}
         minDate={new Date()}
         {...props}

@@ -29,15 +29,33 @@ const TaskList: FC<TaskListProps> = ({ handleEditTask, tasks }) => {
               <p className="text-xs text-gray-500">{task.dueDate}</p>
             </div>
             <div className="flex gap-2">
-              <button data-testid="button-list-edit" onClick={() => handleEditTask(task.id)}>
+              <button
+                className="focus:outline-emerald-500 focus:shadow-outline"
+                data-testid="button-list-edit"
+                onClick={() => handleEditTask(task.id)}
+                aria-label="Edit Task"
+              >
                 <Icon icon="tabler:edit" className="text-2xl" />
               </button>
-              <button data-testid="button-list-mark" onClick={() => handleMarkAsCompleted(task.id)}>
-                <Icon icon="tabler:circle-check" className="text-2xl " />
+
+              <button
+                className="focus:outline-emerald-500 focus:shadow-outline"
+                data-testid="button-list-mark"
+                onClick={() => handleMarkAsCompleted(task.id)}
+                aria-label="Mark Task as Completed"
+              >
+                <Icon icon="tabler:circle-check" className="text-2xl" />
               </button>
-              <button data-testid="button-list-delete" onClick={() => removeTask(task.id)}>
-                <Icon icon="tabler:trash" className="text-2xl " />
+
+              <button
+                className="focus:outline-emerald-500 focus:shadow-outline"
+                data-testid="button-list-delete"
+                onClick={() => removeTask(task.id)}
+                aria-label="Delete Task"
+              >
+                <Icon icon="tabler:trash" className="text-2xl" />
               </button>
+
             </div>
           </div>
         </li>

@@ -19,7 +19,7 @@ const CreateTask: FC<TaskProps> = ({
           type="text"
           id="title"
           data-testid="title"
-          className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline focus:outline-emerald-500 "
           value={taskTitle}
           onChange={handleTitleChange}
           required />
@@ -32,18 +32,25 @@ const CreateTask: FC<TaskProps> = ({
       </div>
       <div className="flex justify-end gap-4">
         <button
+          role="button"
+          aria-label="Cancel"
           onClick={() => closeTask()}
           type="button"
-          className="border-2 border-gray-500 hover:bg-gray-700 text-gray-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          className="border-2 border-gray-500 hover:bg-gray-700 text-gray-500 font-bold py-2 px-4 rounded focus:outline-emerald-500  focus:shadow-outline"
+        >
           Cancel
         </button>
+
         <button
+          role="submit"
+          aria-label="Submit Task"
           onClick={() => handleSubmit()}
           type="submit"
-          className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-emerald-900  focus:shadow-outline"
         >
           {submitLabel}
         </button>
+
       </div>
     </div>
   );
