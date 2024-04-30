@@ -9,14 +9,16 @@ const CreateTask: FC<TaskProps> = ({
   handleDateChange,
   handleTitleChange,
   selectedDate,
+  submitLabel,
   taskTitle }) => {
   return (
     <div data-testid="form-task" className="flex flex-col justify-end">
       <div className="mb-4">
-        <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Create Task</label>
+        <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Task Title</label>
         <input
           type="text"
           id="title"
+          data-testid="title"
           className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           value={taskTitle}
           onChange={handleTitleChange}
@@ -40,7 +42,7 @@ const CreateTask: FC<TaskProps> = ({
           type="submit"
           className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
-          Add Task
+          {submitLabel}
         </button>
       </div>
     </div>

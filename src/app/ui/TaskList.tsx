@@ -5,11 +5,17 @@ import { Task } from '@/types/Task'
 import useStore from '@/stores/todo-stores';
 
 type TaskListProps = {
+  tasks: Task[],
   handleEditTask: (id: number) => void;
 };
 
-const TaskList: FC<TaskListProps> = ({ handleEditTask }) => {
-  const { tasks, markAsCompleted, removeTask } = useStore();
+const TaskList: FC<TaskListProps> = ({ handleEditTask, tasks }) => {
+  const { markAsCompleted, removeTask } = useStore();
+
+  const handleMarkAsCompleted = (id: number) => {
+    markAsCompleted(id)
+  }
+
   return (
     <ul>
       {tasks.map((task: Task) => (
@@ -23,13 +29,13 @@ const TaskList: FC<TaskListProps> = ({ handleEditTask }) => {
               <p className="text-xs text-gray-500">{task.dueDate}</p>
             </div>
             <div className="flex gap-2">
-              <button onClick={() => handleEditTask(task.id)}>
+              <button data-testid="button-list-edit" onClick={() => handleEditTask(task.id)}>
                 <Icon icon="tabler:edit" className="text-2xl" />
               </button>
-              <button onClick={() => markAsCompleted(task.id)}>
+              <button data-testid="button-list-mark" onClick={() => handleMarkAsCompleted(task.id)}>
                 <Icon icon="tabler:circle-check" className="text-2xl " />
               </button>
-              <button onClick={() => removeTask(task.id)}>
+              <button data-testid="button-list-delete" onClick={() => removeTask(task.id)}>
                 <Icon icon="tabler:trash" className="text-2xl " />
               </button>
             </div>
