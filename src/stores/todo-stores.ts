@@ -6,7 +6,7 @@ interface State {
   addTask: (todo: Task) => void;
   removeTask: (id: number) => void;
   markAsCompleted: (id: number) => void;
-  editTask: (id: number) => void;
+  updateTask: (id: number, todo: Task) => void;
 }
 
 const useStore = create<State>((set) => ({
@@ -17,10 +17,10 @@ const useStore = create<State>((set) => ({
       tasks: [...state.tasks, todo]
     })),
 
-  editTask: (todo: Task) =>
+  updateTask: (id: number, todo: Task) =>
     set((state) => ({
       tasks: state.tasks.map((task) =>
-        task.id === todo.id ? todo : task
+        task.id === id ? { ...task, ...todo } : task
       )
     })),
 

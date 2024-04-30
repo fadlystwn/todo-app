@@ -11,6 +11,7 @@ export interface TaskProps {
   handleSubmit: () => void;
   handleTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   taskTitle: string;
+  submitLabel: string;
   handleDateChange: (date: any) => void;
   selectedDate: Date | null;
 }
