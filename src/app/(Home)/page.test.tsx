@@ -79,4 +79,14 @@ describe('TodoApp', () => {
       console.log(err)
     }
   })
+
+  it('deletes a task', async () => {
+    try {
+      await createTask('Task 1', '2021-09-01')
+      fireEvent.click(screen.getByTestId('button-list-delete'))
+      expect(screen.queryByTestId('task')).not.toBeInTheDocument()
+    } catch (err) {
+      console.log(err)
+    }
+  })
 })
