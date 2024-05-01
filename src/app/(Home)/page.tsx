@@ -14,6 +14,7 @@ const TodoApp = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [isNewTask, setIsNewTask] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [animate, setAnimate] = useState('animate__fadeIn');
 
   const handleCreateTask = () => {
     addTask({
@@ -26,6 +27,7 @@ const TodoApp = () => {
 
   const handleTaskSubmission = () => {
     handleCreateTask()
+    setAnimate('animate__flipInX')
     setIsTaskVisible(false)
   }
 
@@ -102,6 +104,7 @@ const TodoApp = () => {
           {remainingTask.length > 0 ? (
             <TaskList
               tasks={remainingTask}
+              animate={animate}
               handleEditTask={(id: number) => handleEditTask(id)}
             />
           ) : <NoTaskUI />}

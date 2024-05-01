@@ -6,10 +6,11 @@ import useStore from '@/stores/todo-stores';
 
 type TaskListProps = {
   tasks: Task[],
+  animate: string,
   handleEditTask: (id: number) => void;
 };
 
-const TaskList: FC<TaskListProps> = ({ handleEditTask, tasks }) => {
+const TaskList: FC<TaskListProps> = ({ handleEditTask, tasks, animate }) => {
   const { markAsCompleted, removeTask } = useStore();
 
   const handleMarkAsCompleted = (id: number) => {
@@ -20,7 +21,7 @@ const TaskList: FC<TaskListProps> = ({ handleEditTask, tasks }) => {
     <ul>
       {tasks.map((task: Task) => (
 
-        <li data-testid="task" key={task.id} className='my-3 p-3 bg-emerald-100 rounded hover:bg-emerald-200'>
+        <li data-testid="task" key={task.id} className={`animate__animated ${animate} my-3 p-3 bg-emerald-100 rounded hover:bg-emerald-200`}>
           <div className="flex justify-between">
             <div>
               <p>

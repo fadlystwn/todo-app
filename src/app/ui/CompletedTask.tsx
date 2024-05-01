@@ -13,9 +13,9 @@ const CompletedTask: FC<TasksProps> = ({ tasks }) => {
       <h2 className="text-xl font-semibold mb-4 ">Completed Task</h2>
       <ul>
         {tasks.map((task) => (
-          <li key={task.id} className='my-3 p-3 bg-slate-100 rounded hover:bg-slate-200'>
+          <li key={task.id} className="animate__animated animate__bounce my-3 p-3 bg-slate-100 rounded hover:bg-slate-200">
             <div className="flex justify-between">
-              <div>
+              <div >
                 <p>{task.title}</p>
                 <p className="text-xs text-gray-500">Completed</p>
               </div>
